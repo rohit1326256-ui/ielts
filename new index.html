@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IELTS Student Practice Hub</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.20);
+}
+
+.header h1 {
+    margin: 0;
+    color: #673ab7;
+}
+
+.header p {
+    color: #666;
+}
+
+/* ================= NAVIGATION ================= */
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    flex: 1;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    background: white;
+    color: #673ab7;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #673ab7;
+    color: white;
+}
+
+/* ================= SECTIONS ================= */
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.20);
+}
+
+#progress {
+    color: #777;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.category {
+    display: inline-block;
+    background: #eee5ff;
+    color: #673ab7;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#question {
+    color: #333;
+    line-height: 1.5;
+}
+
+/* ================= VISUAL QUESTION ================= */
+
+.visual {
+    width: 100%;
+    min-height: 180px;
+    border-radius: 15px;
+    background: linear-gradient(135deg,#eef2ff,#f8f0ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 90px;
+    border: 2px solid #e0d5ff;
+}
+
+/* ================= OPTIONS ================= */
+
+.option {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: #f7f7f7;
+    color: #333;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #673ab7;
+    background: #eee8ff;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+/* IMPORTANT:
+   WHITE TEXT ON ANSWERS
+*/
+
+.option.correct {
+    background: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+.option.wrong {
+    background: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+/* ================= FEEDBACK ================= */
+
+#answerFeedback {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+
+.correct-feedback {
+    background: #e8f8ed;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.wrong-feedback {
+    background: #fdeaea;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+.feedback-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.ielts-tip {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(103,58,183,.10);
+}
+
+/* ================= BUTTON ================= */
+
+.main-button {
+    border: none;
+    background: #673ab7;
+    color: white;
+    padding: 13px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.main-button:hover {
+    background: #512da8;
+}
+
+/* ================= RESULT ================= */
+
+#result {
+    display: none;
+    text-align: center;
+}
+
+.big-score {
+    font-size: 30px;
+    color: #673ab7;
+    font-weight: bold;
+}
+
+.band {
+    font-size: 30px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.result-card {
+    background: #f7f3ff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.score-row {
+    margin: 12px 0;
+}
+
+.score-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    height: 12px;
+    background: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #673ab7;
+}
+
+/* ================= CHAT ================= */
+
+.chat-box {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.20);
+}
+
+.chat-header {
+    background: #673ab7;
+    color: white;
+    padding: 20px;
+}
+
+.chat-header h2 {
+    margin: 0 0 5px;
+}
+
+.topic {
+    padding: 18px;
+    background: #f4efff;
+    line-height: 1.6;
+}
+
+.messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f3f3f3;
+}
+
+.message {
+    max-width: 80%;
+    padding: 12px 15px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.bot {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.user {
+    background: #673ab7;
+    color: white;
+    margin-left: auto;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+#sendButton {
+    border: none;
+    background: #673ab7;
+    color: white;
+    padding: 0 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* ================= WRITING ================= */
+
+.writing-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.20);
+}
+
+.writing-topic {
+    background: #f4efff;
+    padding: 20px;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+
+#essay {
+    width: 100%;
+    min-height: 300px;
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    resize: vertical;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+#wordCount {
+    color: #666;
+}
+
+#writingFeedback {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: #f4efff;
+    border-radius: 12px;
+    line-height: 1.7;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .quiz-box,
+    .writing-box {
+        padding: 20px;
+    }
+
+    .visual {
+        min-height: 140px;
+        font-size: 65px;
+    }
+
+    .chat-input {
+        flex-direction: column;
+    }
+
+    #sendButton {
+        padding: 13px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <h1>🎓 IELTS Student Hub</h1>
+
+    <p>
+        Practice English • Test Your Knowledge • Improve Your IELTS
+    </p>
+
+</div>
+
+
+<!-- ================= TABS ================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="openTab('quizTab',this)"
+    >
+        📝 IELTS Quiz
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('chatTab',this)"
+    >
+        💬 English Chat
+    </button>
+
+    <button
+        class="tab"
+        onclick="openTab('writingTab',this)"
+    >
+        ✍️ Writing
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     QUIZ
+===================================================== -->
+
+<div id="quizTab" class="section active">
+
+<div class="quiz-box">
+
+<div id="quizScreen">
+
+    <div id="progress"></div>
+
+    <div id="category" class="category"></div>
+
+    <div id="visual" class="visual" style="display:none;"></div>
+
+    <h2 id="question"></h2>
+
+    <div id="options"></div>
+
+    <div id="answerFeedback"></div>
+
+    <button
+        id="nextButton"
+        class="main-button"
+        style="display:none"
+        onclick="nextQuestion()"
+    >
+        Next Question ➡️
+    </button>
+
+</div>
+
+
+<!-- ================= RESULT ================= -->
+
+<div id="result">
+
+    <h2>🎉 IELTS Practice Finished!</h2>
+
+    <p class="big-score" id="score"></p>
+
+    <p class="band" id="band"></p>
+
+    <div class="result-card">
+
+        <h3>📊 Your Skill Results</h3>
+
+        <div class="score-row">
+
+            <div class="score-label">
+                <span>Grammar</span>
+                <strong id="grammarScore"></strong>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    id="grammarBar"
+                    class="progress-fill"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="score-row">
+
+            <div class="score-label">
+                <span>Vocabulary</span>
+                <strong id="vocabularyScore"></strong>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    id="vocabularyBar"
+                    class="progress-fill"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="score-row">
+
+            <div class="score-label">
+                <span>Coherence</span>
+                <strong id="coherenceScore"></strong>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    id="coherenceBar"
+                    class="progress-fill"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="score-row">
+
+            <div class="score-label">
+                <span>Visual Questions</span>
+                <strong id="visualScore"></strong>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    id="visualBar"
+                    class="progress-fill"
+                ></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="finalFeedback"
+        class="result-card"
+    ></div>
+
+
+    <button
+        class="main-button"
+        onclick="restartQuiz()"
+    >
+        🔄 Try Quiz Again
+    </button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CHAT
+===================================================== -->
+
+<div id="chatTab" class="section">
+
+<div class="chat-box">
+
+    <div class="chat-header">
+
+        <h2>💬 IELTS Speaking Practice</h2>
+
+        <p>
+            Text your answer and practise English.
+        </p>
+
+    </div>
+
+
+    <div class="topic">
+
+        <strong>Speaking Question:</strong>
+
+        <br><br>
+
+        Tell me about your hometown.
+
+        What do you like about it?
+
+        What would you change about it?
+
+    </div>
+
+
+    <div id="messages" class="messages">
+
+        <div class="message bot">
+
+            👋 Hello!
+
+            <br><br>
+
+            Let's practise IELTS Speaking.
+
+            <br><br>
+
+            <strong>Question:</strong>
+
+            What is your hometown like?
+
+        </div>
+
+    </div>
+
+
+    <div class="chat-input">
+
+        <input
+            id="chatInput"
+            type="text"
+            placeholder="Type your English answer..."
+            onkeydown="checkEnter(event)"
+        >
+
+        <button
+            id="sendButton"
+            onclick="sendMessage()"
+        >
+            Send 📤
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     WRITING
+===================================================== -->
+
+<div id="writingTab" class="section">
+
+<div class="writing-box">
+
+    <h2>✍️ IELTS Writing Task 2</h2>
+
+    <div class="writing-topic">
+
+        <strong>Essay Question:</strong>
+
+        <p>
+            Some people believe that students should study only
+            subjects that are useful for their future careers.
+            Others believe that students should study a wide
+            range of subjects.
+        </p>
+
+        <p>
+            Discuss both views and give your own opinion.
+        </p>
+
+    </div>
+
+
+    <textarea
+        id="essay"
+        placeholder="Write your essay here..."
+        oninput="countWords()"
+    ></textarea>
+
+
+    <p id="wordCount">
+        Words: 0
+    </p>
+
+
+    <button
+        class="main-button"
+        onclick="checkEssay()"
+    >
+        Check Writing 🔍
+    </button>
+
+
+    <div id="writingFeedback"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   QUESTIONS
+===================================================== */
+
+const questions = [
+
+/* 1 */
+
+{
+    category: "Grammar",
+    question: "Choose the correct sentence.",
+    options: [
+        "She have lived in Nepal for five years.",
+        "She has lived in Nepal for five years.",
+        "She living in Nepal for five years.",
+        "She has live in Nepal for five years."
+    ],
+    answer: 1,
+    explanation:
+        "The present perfect 'has lived' is correct because the situation began in the past and continues now.",
+    tip:
+        "Use the present perfect for situations that started in the past and continue to the present."
+},
+
+/* 2 */
+
+{
+    category: "Vocabulary",
+    question: "What is the closest meaning of 'essential'?",
+    options: [
+        "Unnecessary",
+        "Optional",
+        "Very important",
+        "Expensive"
+    ],
+    answer: 2,
+    explanation:
+        "'Essential' means extremely important or necessary.",
+    tip:
+        "Useful IELTS synonyms include essential, vital, crucial and necessary."
+},
+
+/* 3 */
+
+{
+    category: "Vocabulary",
+    question:
+        "Many students are becoming increasingly ______ of the importance of English.",
+    options: [
+        "aware",
+        "awareness",
+        "carefully",
+        "know"
+    ],
+    answer: 0,
+    explanation:
+        "The correct collocation is 'become aware of something'.",
+    tip:
+        "Learn collocations because they can improve your IELTS vocabulary score."
+},
+
+/* 4 */
+
+{
+    category: "Coherence",
+    question:
+        "The cost of living has increased. ______, many families are finding it difficult to save money.",
+    options: [
+        "However",
+        "Therefore",
+        "Although",
+        "For example"
+    ],
+    answer: 1,
+    explanation:
+        "'Therefore' introduces a result.",
+    tip:
+        "Therefore = result. However = contrast. For example = illustration."
+},
+
+/* 5 */
+
+{
+    category: "Academic English",
+    question:
+        "Which sentence is most appropriate for an IELTS academic essay?",
+    options: [
+        "Technology is super cool.",
+        "Technology has significantly changed the way people communicate.",
+        "Technology is awesome.",
+        "People use phones a lot, you know."
+    ],
+    answer: 1,
+    explanation:
+        "The second sentence uses formal academic English.",
+    tip:
+        "Avoid slang and overly informal expressions in IELTS Writing."
+},
+
+/* 6 */
+
+{
+    category: "Grammar",
+    question:
+        "If governments ______ more money on public transport, traffic congestion could decrease.",
+    options: [
+        "spend",
+        "spent",
+        "spending",
+        "will spend"
+    ],
+    answer: 1,
+    explanation:
+        "This is a second conditional: If + past simple + could/would + base verb.",
+    tip:
+        "Conditional sentences are useful when discussing hypothetical solutions."
+},
+
+/* 7 */
+
+{
+    category: "Vocabulary",
+    question:
+        "What does 'a significant increase' mean?",
+    options: [
+        "A noticeable increase",
+        "A small decrease",
+        "No change",
+        "A problem"
+    ],
+    answer: 0,
+    explanation:
+        "'Significant' means considerable or noticeable.",
+    tip:
+        "Use significant, substantial and considerable when describing graphs."
+},
+
+/* 8 */
+
+{
+    category: "Grammar",
+    question:
+        "Choose the correct sentence.",
+    options: [
+        "Despite of the rain, we went outside.",
+        "Despite the rain, we went outside.",
+        "Despite it was raining, we went outside.",
+        "Despite of raining, we went outside."
+    ],
+    answer: 1,
+    explanation:
+        "We use 'despite + noun' or 'despite + -ing'.",
+    tip:
+        "Remember: despite the rain / although it was raining."
+},
+
+/* 9 */
+
+{
+    category: "Vocabulary",
+    question:
+        "Which word is closest in meaning to 'beneficial'?",
+    options: [
+        "Harmful",
+        "Useful",
+        "Difficult",
+        "Expensive"
+    ],
+    answer: 1,
+    explanation:
+        "'Beneficial' means producing a positive result.",
+    tip:
+        "Beneficial, advantageous and valuable are useful academic words."
+},
+
+/* 10 */
+
+{
+    category: "Grammar",
+    question:
+        "Choose the correct sentence.",
+    options: [
+        "People should to use public transport.",
+        "People should using public transport.",
+        "People should use public transport.",
+        "People should used public transport."
+    ],
+    answer: 2,
+    explanation:
+        "After 'should', we use the base form of the verb.",
+    tip:
+        "Remember: should use, can use, must use."
+},
+
+/* 11 - HARD */
+
+{
+    category: "Advanced Grammar",
+    question:
+        "Had governments invested more heavily in renewable energy a decade ago, many countries ______ less dependent on fossil fuels today.",
+    options: [
+        "would be",
+        "will be",
+        "would have been",
+        "were"
+    ],
+    answer: 0,
+    explanation:
+        "This is a mixed conditional. The hypothetical action happened in the past, while the result is in the present.",
+    tip:
+        "Mixed conditionals can demonstrate advanced grammatical range."
+},
+
+/* 12 - HARD */
+
+{
+    category: "Advanced Vocabulary",
+    question:
+        "Choose the sentence that uses 'albeit' correctly.",
+    options: [
+        "Albeit the weather was bad, we continued.",
+        "The plan was successful, albeit expensive.",
+        "Albeit he was tired, but he continued.",
+        "Albeit of the difficulties, they succeeded."
+    ],
+    answer: 1,
+    explanation:
+        "'Albeit' means although or even though and can introduce an adjective phrase.",
+    tip:
+        "Use advanced vocabulary naturally. Accuracy is more important than complexity."
+},
+
+/* 13 - HARD */
+
+{
+    category: "Advanced Vocabulary",
+    question:
+        "Which sentence uses 'notwithstanding' correctly?",
+    options: [
+        "Notwithstanding the financial difficulties, the project was completed.",
+        "Notwithstanding of the financial difficulties, the project was completed.",
+        "Notwithstanding the project was expensive, it was completed.",
+        "The project was expensive notwithstanding of it."
+    ],
+    answer: 0,
+    explanation:
+        "'Notwithstanding' can be followed directly by a noun phrase and means despite.",
+    tip:
+        "Formal linking expressions can improve lexical range when used correctly."
+},
+
+/* 14 - HARD */
+
+{
+    category: "Advanced Grammar",
+    question:
+        "Choose the sentence with the correct use of inversion.",
+    options: [
+        "Rarely governments have implemented such reforms.",
+        "Rarely have governments implemented such reforms.",
+        "Rarely governments implemented have such reforms.",
+        "Rarely did governments have implemented such reforms."
+    ],
+    answer: 1,
+    explanation:
+        "After restrictive adverbs such as 'rarely', formal English can use inversion.",
+    tip:
+        "Inversion can show grammatical range, but only use it when you are confident."
+},
+
+/* 15 - HARD */
+
+{
+    category: "Academic Writing",
+    question:
+        "Which sentence best expresses a cautious academic claim?",
+    options: [
+        "Social media definitely destroys everyone's mental health.",
+        "Social media obviously destroys people's lives.",
+        "Social media may contribute to declining levels of well-being among some users.",
+        "Social media destroys people, and there is no doubt about it."
+    ],
+    answer: 2,
+    explanation:
+        "Academic writing often avoids absolute claims. 'May contribute to' is appropriately cautious.",
+    tip:
+        "Use may, might, could, appears to and is likely to for cautious academic claims."
+},
+
+/* 16 - VISUAL */
+
+{
+    category: "Visual Question",
+    visual: "🏙️",
+    question:
+        "Look at the image. Which statement best describes the scene?",
+    options: [
+        "It shows a crowded urban environment.",
+        "It shows a remote farming village.",
+        "It shows an empty desert.",
+        "It shows a tropical beach."
+    ],
+    answer: 0,
+    explanation:
+        "The city emoji represents buildings and an urban environment. 'Crowded urban environment' is the best description.",
+    tip:
+        "IELTS Speaking Tip: When describing a picture, identify the place, people, activity and overall atmosphere."
+},
+
+/* 17 - VISUAL */
+
+{
+    category: "Visual Question",
+    visual: "📈",
+    question:
+        "Look at the image. What does the symbol most likely represent?",
+    options: [
+        "A downward trend",
+        "An upward trend",
+        "A stable population",
+        "A circular process"
+    ],
+    answer: 1,
+    explanation:
+        "The upward graph symbol represents growth or an increasing trend.",
+    tip:
+        "IELTS Writing Task 1: Useful words include increase, rise, climb, grow and surge."
+},
+
+/* 18 - VISUAL */
+
+{
+    category: "Visual Question",
+    visual: "🏭",
+    question:
+        "What environmental issue is most closely associated with this image?",
+    options: [
+        "Industrial pollution",
+        "Ocean tourism",
+        "Mountain climbing",
+        "Wildlife photography"
+    ],
+    answer: 0,
+    explanation:
+        "A factory is commonly associated with industrial activity and potential pollution.",
+    tip:
+        "IELTS Tip: Learn topic vocabulary such as emissions, pollution, waste, renewable energy and industrialisation."
+},
+
+/* 19 - VISUAL */
+
+{
+    category: "Visual Question",
+    visual: "🌳🏙️",
+    question:
+        "What contrast is represented by this image?",
+    options: [
+        "Urban development and green space",
+        "Two types of transportation",
+        "Two kinds of food",
+        "Different weather conditions"
+    ],
+    answer: 0,
+    explanation:
+        "The image combines a tree and city environment, representing the relationship between urban development and green spaces.",
+    tip:
+        "IELTS Speaking Tip: Compare ideas using 'whereas', 'while', 'in contrast' and 'on the other hand'."
+},
+
+/* 20 - VISUAL */
+
+{
+    category: "Visual Question",
+    visual: "✈️🌍",
+    question:
+        "What topic is most closely connected with this image?",
+    options: [
+        "International travel",
+        "Domestic farming",
+        "Household cooking",
+        "School examinations"
+    ],
+    answer: 0,
+    explanation:
+        "The airplane and globe represent international travel.",
+    tip:
+        "IELTS Tip: For travel topics, useful vocabulary includes tourism, destinations, accommodation, cultural exchange and transportation."
+}
+
+];
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+let categoryScores = {
+    Grammar: { correct: 0, total: 0 },
+    Vocabulary: { correct: 0, total: 0 },
+    Coherence: { correct: 0, total: 0 },
+    Visual: { correct: 0, total: 0 }
+};
+
+
+/* =====================================================
+   SHOW QUESTION
+===================================================== */
+
+function showQuestion() {
+
+    answered = false;
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("progress").textContent =
+        "Question " +
+        (currentQuestion + 1) +
+        " of " +
+        questions.length;
+
+    document.getElementById("category").textContent =
+        q.category;
+
+
+    /* VISUAL */
+
+    const visual =
+        document.getElementById("visual");
+
+    if (q.visual) {
+
+        visual.style.display = "flex";
+        visual.textContent = q.visual;
+
+    } else {
+
+        visual.style.display = "none";
+        visual.textContent = "";
+
+    }
+
+
+    document.getElementById("question").textContent =
+        q.question;
+
+
+    const options =
+        document.getElementById("options");
+
+    options.innerHTML = "";
+
+
+    const feedback =
+        document.getElementById("answerFeedback");
+
+    feedback.style.display = "none";
+    feedback.className = "";
+
+
+    q.options.forEach(function(option,index) {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "option";
+
+        button.textContent = option;
+
+        button.onclick = function() {
+
+            selectAnswer(index,button);
+
+        };
+
+        options.appendChild(button);
+
+    });
+
+
+    document.getElementById("nextButton")
+        .style.display = "none";
+}
+
+
+/* =====================================================
+   SELECT ANSWER
+===================================================== */
+
+function selectAnswer(selectedIndex,selectedButton) {
+
+    if (answered) {
+        return;
+    }
+
+    answered = true;
+
+    const q = questions[currentQuestion];
+
+    const correctIndex = q.answer;
+
+    const buttons =
+        document.querySelectorAll(".option");
+
+
+    /* CATEGORY */
+
+    let skill = "Vocabulary";
+
+    if (q.category.includes("Grammar")) {
+        skill = "Grammar";
+    }
+
+    else if (
+        q.category.includes("Coherence")
+    ) {
+        skill = "Coherence";
+    }
+
+    else if (
+        q.category.includes("Visual")
+    ) {
+        skill = "Visual";
+    }
+
+
+    categoryScores[skill].total++;
+
+
+    /* CORRECT */
+
+    if (selectedIndex === correctIndex) {
+
+        score++;
+
+        categoryScores[skill].correct++;
+
+        selectedButton.classList.add("correct");
+
+
+        const feedback =
+            document.getElementById("answerFeedback");
+
+        feedback.className =
+            "correct-feedback";
+
+        feedback.innerHTML =
+
+            "<div class='feedback-title'>" +
+            "✅ Correct! Excellent work!" +
+            "</div>" +
+
+            "<strong>Explanation:</strong><br>" +
+            q.explanation +
+
+            "<div class='ielts-tip'>" +
+            "<strong>🎯 IELTS Tip:</strong><br>" +
+            q.tip +
+            "</div>";
+
+        feedback.style.display = "block";
+
+    }
+
+
+    /* WRONG */
+
+    else {
+
+        selectedButton.classList.add("wrong");
+
+        buttons[correctIndex]
+            .classList.add("correct");
+
+
+        const feedback =
+            document.getElementById("answerFeedback");
+
+        feedback.className =
+            "wrong-feedback";
+
+        feedback.innerHTML =
+
+            "<div class='feedback-title'>" +
+            "❌ Not quite." +
+            "</div>" +
+
+            "<strong>Correct Answer:</strong><br>" +
+            q.options[correctIndex] +
+
+            "<br><br>" +
+
+            "<strong>Explanation:</strong><br>" +
+            q.explanation +
+
+            "<div class='ielts-tip'>" +
+            "<strong>🎯 IELTS Tip:</strong><br>" +
+            q.tip +
+            "</div>";
+
+        feedback.style.display = "block";
+    }
+
+
+    buttons.forEach(function(button) {
+
+        button.disabled = true;
+
+    });
+
+
+    document.getElementById("nextButton")
+        .style.display = "inline-block";
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+===================================================== */
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (
+        currentQuestion <
+        questions.length
+    ) {
+
+        showQuestion();
+
+    } else {
+
+        showResult();
+
+    }
+}
+
+
+/* =====================================================
+   BAND CALCULATION
+===================================================== */
+
+function calculateBand(score,total) {
+
+    const percentage =
+        score / total;
+
+
+    if (percentage >= 0.93) {
+        return 9.0;
+    }
+
+    if (percentage >= 0.87) {
+        return 8.5;
+    }
+
+    if (percentage >= 0.80) {
+        return 8.0;
+    }
+
+    if (percentage >= 0.73) {
+        return 7.5;
+    }
+
+    if (percentage >= 0.67) {
+        return 7.0;
+    }
+
+    if (percentage >= 0.60) {
+        return 6.5;
+    }
+
+    if (percentage >= 0.53) {
+        return 6.0;
+    }
+
+    if (percentage >= 0.47) {
+        return 5.5;
+    }
+
+    if (percentage >= 0.40) {
+        return 5.0;
+    }
+
+    if (percentage >= 0.33) {
+        return 4.5;
+    }
+
+    if (percentage >= 0.27) {
+        return 4.0;
+    }
+
+    return 3.5;
+}
+
+
+/* =====================================================
+   SHOW RESULT
+===================================================== */
+
+function showResult() {
+
+    document.getElementById("quizScreen")
+        .style.display = "none";
+
+    document.getElementById("result")
+        .style.display = "block";
+
+
+    const band =
+        calculateBand(score,questions.length);
+
+
+    document.getElementById("score")
+        .textContent =
+        "Your score: " +
+        score +
+        " / " +
+        questions.length;
+
+
+    document.getElementById("band")
+        .textContent =
+        "🎯 Estimated Practice Band: " +
+        band.toFixed(1);
+
+
+    showSkill(
+        "Grammar",
+        "grammarScore",
+        "grammarBar"
+    );
+
+    showSkill(
+        "Vocabulary",
+        "vocabularyScore",
+        "vocabularyBar"
+    );
+
+    showSkill(
+        "Coherence",
+        "coherenceScore",
+        "coherenceBar"
+    );
+
+    showSkill(
+        "Visual",
+        "visualScore",
+        "visualBar"
+    );
+
+
+    let feedback = "";
+
+
+    if (band >= 8) {
+
+        feedback =
+            "🏆 Outstanding! Your result shows very strong English ability. " +
+            "Focus on precision, natural expressions and complex academic structures.";
+
+    }
+
+    else if (band >= 7) {
+
+        feedback =
+            "🔥 Very strong performance! You have a good foundation for a high IELTS score. " +
+            "Work on accuracy and developing ideas in more depth.";
+
+    }
+
+    else if (band >= 6) {
+
+        feedback =
+            "👍 Good progress! Your English foundation is developing well. " +
+            "Focus on grammar accuracy, vocabulary and complex sentence structures.";
+
+    }
+
+    else if (band >= 5) {
+
+        feedback =
+            "📚 Keep practising. Build your vocabulary, review grammar and practise answering IELTS questions with complete explanations.";
+
+    }
+
+    else {
+
+        feedback =
+            "💪 Keep going! Start with core grammar and vocabulary and practise a little every day.";
+
+    }
+
+
+    document.getElementById("finalFeedback")
+        .innerHTML =
+
+        "<h3>💡 Your IELTS Feedback</h3>" +
+
+        "<p>" +
+        feedback +
+        "</p>" +
+
+        "<p>" +
+        "<strong>Important:</strong> This is a practice estimate. " +
+        "It is not an official IELTS band score because the real IELTS test " +
+        "assesses Listening, Reading, Writing and Speaking separately." +
+        "</p>";
+}
+
+
+/* =====================================================
+   SKILL SCORE
+===================================================== */
+
+function showSkill(skill,labelId,barId) {
+
+    const data =
+        categoryScores[skill];
+
+
+    if (data.total === 0) {
+
+        document.getElementById(labelId)
+            .textContent =
+            "N/A";
+
+        document.getElementById(barId)
+            .style.width =
+            "0%";
+
+        return;
+    }
+
+
+    const percent =
+        Math.round(
+            data.correct /
+            data.total *
+            100
+        );
+
+
+    const skillBand =
+        calculateBand(
+            data.correct,
+            data.total
+        );
+
+
+    document.getElementById(labelId)
+        .textContent =
+        skillBand.toFixed(1);
+
+
+    document.getElementById(barId)
+        .style.width =
+        percent + "%";
+}
+
+
+/* =====================================================
+   RESTART
+===================================================== */
+
+function restartQuiz() {
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answered = false;
+
+
+    categoryScores = {
+        Grammar: { correct: 0, total: 0 },
+        Vocabulary: { correct: 0, total: 0 },
+        Coherence: { correct: 0, total: 0 },
+        Visual: { correct: 0, total: 0 }
+    };
+
+
+    document.getElementById("quizScreen")
+        .style.display = "block";
+
+    document.getElementById("result")
+        .style.display = "none";
+
+
+    showQuestion();
+}
+
+
+/* =====================================================
+   TAB SYSTEM
+===================================================== */
+
+function openTab(tabId,button) {
+
+    document
+        .querySelectorAll(".section")
+        .forEach(function(section) {
+
+            section.classList.remove("active");
+
+        });
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(function(tab) {
+
+            tab.classList.remove("active");
+
+        });
+
+
+    document.getElementById(tabId)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+}
+
+
+/* =====================================================
+   CHAT
+===================================================== */
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("chatInput");
+
+    const text =
+        input.value.trim();
+
+
+    if (text === "") {
+        return;
+    }
+
+
+    addMessage(text,"user");
+
+    input.value = "";
+
+
+    setTimeout(function() {
+
+        botReply(text);
+
+    },500);
+}
+
+
+function addMessage(text,type) {
+
+    const messages =
+        document.getElementById("messages");
+
+
+    const message =
+        document.createElement("div");
+
+
+    message.className =
+        "message " + type;
+
+
+    message.textContent =
+        text;
+
+
+    messages.appendChild(message);
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+}
+
+
+function botReply(text) {
+
+    const words =
+        text
+        .trim()
+        .split(/\s+/)
+        .length;
+
+
+    let reply;
+
+
+    if (words < 5) {
+
+        reply =
+            "💡 Try to give a longer IELTS-style answer. Add a reason and an example.";
+
+    }
+
+    else if (
+        text.toLowerCase()
+        .includes("because")
+    ) {
+
+        reply =
+            "✅ Good! You gave a reason. Now try adding a specific example.";
+
+    }
+
+    else if (
+        text.toLowerCase()
+        .includes("however")
+    ) {
+
+        reply =
+            "👏 Nice use of a linking word. Try adding another supporting idea.";
+
+    }
+
+    else {
+
+        reply =
+            "👍 Good answer! Try to develop it with a reason, example and advanced vocabulary.";
+
+    }
+
+
+    addMessage(reply,"bot");
+}
+
+
+function checkEnter(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+
+    }
+}
+
+
+/* =====================================================
+   WRITING
+===================================================== */
+
+function countWords() {
+
+    const text =
+        document.getElementById("essay")
+        .value
+        .trim();
+
+
+    let count = 0;
+
+
+    if (text !== "") {
+
+        count =
+            text
+            .split(/\s+/)
+            .length;
+
+    }
+
+
+    document.getElementById("wordCount")
+        .textContent =
+        "Words: " + count;
+}
+
+
+function checkEssay() {
+
+    const text =
+        document.getElementById("essay")
+        .value
+        .trim();
+
+
+    const feedback =
+        document.getElementById("writingFeedback");
+
+
+    feedback.style.display = "block";
+
+
+    if (text === "") {
+
+        feedback.innerHTML =
+            "✍️ Please write your essay first.";
+
+        return;
+    }
+
+
+    const words =
+        text
+        .split(/\s+/)
+        .length;
+
+
+    let result =
+        "<h3>✍️ Writing Feedback</h3>";
+
+
+    if (words >= 250) {
+
+        result +=
+            "✅ You have reached the minimum 250-word requirement.<br><br>";
+
+    }
+
+    else {
+
+        result +=
+            "⚠️ Your essay has " +
+            words +
+            " words. IELTS Writing Task 2 requires at least 250 words.<br><br>";
+
+    }
+
+
+    if (
+        text.toLowerCase()
+        .includes("however")
+    ) {
+
+        result +=
+            "✅ Good: You used a contrast linker such as 'however'.<br>";
+
+    }
+
+    else {
+
+        result +=
+            "💡 Try using linking words such as however, therefore, moreover and in addition.<br>";
+
+    }
+
+
+    if (
+        text.toLowerCase()
+        .includes("because")
+    ) {
+
+        result +=
+            "✅ Good: You provided a reason.<br>";
+
+    }
+
+    else {
+
+        result +=
+            "💡 Develop your ideas by explaining WHY.<br>";
+
+    }
+
+
+    if (
+        text.toLowerCase()
+        .includes("for example")
+    ) {
+
+        result +=
+            "✅ Good: You included an example.<br>";
+
+    }
+
+    else {
+
+        result +=
+            "💡 Add specific examples to support your main ideas.<br>";
+
+    }
+
+
+    result +=
+        "<br>🎯 <strong>IELTS structure reminder:</strong> " +
+        "Introduction → Body Paragraph 1 → Body Paragraph 2 → Conclusion.";
+
+
+    feedback.innerHTML =
+        result;
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
