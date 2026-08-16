@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Quiz 😄</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quiz-box {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        h1 {
+            color: #673ab7;
+            margin-bottom: 10px;
+        }
+
+        #question {
+            font-size: 22px;
+            margin: 25px 0;
+            color: #333;
+        }
+
+        .option {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 12px;
+            background: #f1f1f1;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: #673ab7;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        #nextBtn,
+        #restartBtn {
+            background: #673ab7;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        #nextBtn:hover,
+        #restartBtn:hover {
+            background: #512da8;
+        }
+
+        #result {
+            display: none;
+        }
+
+        #score {
+            font-size: 25px;
+            font-weight: bold;
+            color: #673ab7;
+        }
+
+        #progress {
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-box">
+
+        <h1>😂 Fun Quiz 😂</h1>
+
+        <div id="quiz">
+
+            <p id="progress"></p>
+
+            <h2 id="question"></h2>
+
+            <div id="options"></div>
+
+            <button id="nextBtn" onclick="nextQuestion()" style="display:none;">
+                Next ➡️
+            </button>
+
+        </div>
+
+        <div id="result">
+
+            <h2>🎉 Quiz Finished! 🎉</h2>
+
+            <p id="score"></p>
+
+            <p id="message"></p>
+
+            <button id="restartBtn" onclick="restartQuiz()">
+                🔄 Play Again
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const questions = [
+
+            {
+                question: "🍕 What food would you choose?",
+                options: ["Pizza 🍕", "Burger 🍔", "Momo 🥟"],
+                answer: 2
+            },
+
+            {
+                question: "😴 What do you do when you're bored?",
+                options: ["Sleep 😴", "Watch videos 📱", "Talk to friends 🗣️"],
+                answer: 1
+            },
+
+            {
+                question: "😂 What makes you laugh the most?",
+                options: ["Memes 😂", "Funny videos 🤣", "Friends 😎"],
+                answer: 0
+            },
+
+            {
+                question: "🏔️ Where would you rather go?",
+                options: ["Beach 🏖️", "Mountains 🏔️", "Big city 🌆"],
+                answer: 1
+            },
+
+            {
+                question: "🎮 What would you rather do?",
+                options: ["Play games 🎮", "Watch movies 🎬", "Listen to music 🎵"],
+                answer: 0
+            },
+
+            {
+                question: "🌙 What time do you like?",
+                options: ["Morning ☀️", "Afternoon 🌤️", "Night 🌙"],
+                answer: 2
+            },
+
+            {
+                question: "🐶 Which animal is your favorite?",
+                options: ["Dog 🐶", "Cat 🐱", "Tiger 🐯"],
+                answer: 0
+            },
+
+            {
+                question: "💰 What would you do if you won a lot of money?",
+                options: ["Travel ✈️", "Buy things 🛍️", "Save it 💰"],
+                answer: 0
+            },
+
+            {
+                question: "📱 Which do you use the most?",
+                options: ["Facebook 📘", "YouTube ▶️", "TikTok 🎵"],
+                answer: 1
+            },
+
+            {
+                question: "😎 What describes you best?",
+                options: ["Funny 😂", "Smart 🧠", "Crazy 🤪"],
+                answer: 2
+            }
+
+        ];
+
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selected = false;
+
+
+        function showQuestion() {
+
+            selected = false;
+
+            const question = questions[currentQuestion];
+
+            document.getElementById("progress").textContent =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+            document.getElementById("question").textContent =
+                question.question;
+
+            const optionsDiv = document.getElementById("options");
+
+            optionsDiv.innerHTML = "";
+
+            question.options.forEach((option, index) => {
+
+                const button = document.createElement("button");
+
+                button.className = "option";
+
+                button.textContent = option;
+
+                button.onclick = function () {
+                    selectAnswer(index, button);
+                };
+
+                optionsDiv.appendChild(button);
+
+            });
+
+            document.getElementById("nextBtn").style.display = "none";
+        }
+
+
+        function selectAnswer(index, button) {
+
+            if (selected) {
+                return;
+            }
+
+            selected = true;
+
+            const correctAnswer = questions[currentQuestion].answer;
+
+            const buttons = document.querySelectorAll(".option");
+
+            if (index === correctAnswer) {
+
+                score++;
+
+                button.style.background = "#4CAF50";
+                button.style.color = "white";
+
+            } else {
+
+                button.style.background = "#f44336";
+                button.style.color = "white";
+
+                buttons[correctAnswer].style.background = "#4CAF50";
+                buttons[correctAnswer].style.color = "white";
+
+            }
+
+            document.getElementById("nextBtn").style.display = "inline-block";
+        }
+
+
+        function nextQuestion() {
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+
+                showQuestion();
+
+            } else {
+
+                showResult();
+
+            }
+        }
+
+
+        function showResult() {
+
+            document.getElementById("quiz").style.display = "none";
+
+            document.getElementById("result").style.display = "block";
+
+            document.getElementById("score").textContent =
+                `Your score: ${score} / ${questions.length}`;
+
+            let message;
+
+            if (score === questions.length) {
+
+                message = "🏆 PERFECT! You are amazing!";
+
+            } else if (score >= 7) {
+
+                message = "🔥 Excellent! You know your stuff!";
+
+            } else if (score >= 5) {
+
+                message = "😎 Not bad! Pretty good!";
+
+            } else {
+
+                message = "😂 Better luck next time!";
+
+            }
+
+            document.getElementById("message").textContent = message;
+        }
+
+
+        function restartQuiz() {
+
+            currentQuestion = 0;
+
+            score = 0;
+
+            document.getElementById("quiz").style.display = "block";
+
+            document.getElementById("result").style.display = "none";
+
+            showQuestion();
+        }
+
+
+        showQuestion();
+
+    </script>
+
+</body>
+</html>  
